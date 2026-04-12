@@ -1,1 +1,11 @@
+
 .env
+.env.*
+!.env.example
+
+node_modules/
+dist/
+*.tsbuildinfo
+*.log
+.vscode/
+.cursor/
