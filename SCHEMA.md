@@ -9,7 +9,7 @@ included or excluded.
 
 
 
-## GitHub Repo 52 Week Commit Activity
+## GitHub Repo 52 Week Commit Activity API
 
 **Source:** `GET /repos/{owner}/{repo}/stats/commit_activity` <br>
 **Primary keys:** `["repo_name", "week_start", "day_of_week"]`
@@ -33,7 +33,7 @@ included or excluded.
 
 
 
-## NASA Near Earth Objects
+## NASA Near Earth Objects API
 
 **Source:** `GET /neo/rest/v1/feed?start_date=...&end_date=...&api_key=API_KEY`<br>
 **Primary keys:** `["neo_id", "approach_date"]`
