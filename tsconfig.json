@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "strict": true, // default, included for clarity
+    "target": "es2022",
+    "module": "NodeNext",
+    "lib": ["es2022"],
+    "types": ["node"],
+
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "sourceMap": true,
+
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "resolveJsonModule": true,
+
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    "noUnusedLocals": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "noFallthroughCasesInSwitch": true
+  },
+
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "tests"]
+}
