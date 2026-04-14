@@ -18,11 +18,17 @@ import { z } from "zod";
 
 
 const ghRepoSchema = z.string()
-    .transform( ownerRepoString => {
+    .transform((ownerRepoString, ctx) => {
         const [owner, repoName, ...rest] = ownerRepoString.split("/");
         if(!owner || !repoName || rest.length > 0) {
-            throw new Error("Missing or invalid owner/repo form");
+            ctx.issues.push({
+                code: "custom",
+                message: `Invalid owner/repo format: ${ownerRepoString}`,
+                input: ownerRepoString,
+            });
+            return z.NEVER;
         };
+        
         return {owner, repoName};
     });
 
@@ -32,25 +38,21 @@ const envDataSchema = z.object({
     DBOX_GITHUB_DATASET_ID: z.uuid(),
     DBOX_NASA_DATASET_ID: z.uuid(),
 
-    GH_ACCESS_TOKEN: z.string().startsWith("github_pat_"),
+    GH_ACCESS_TOKEN: z.string().trim().min(1),
     GH_REPOS: z.string()
         .trim()
         .min(1)
         .transform(string => {
             return string.split(",")
             .map(ghPair => ghPair.trim())
+            .filter(Boolean)
         })
         .pipe(z.array(ghRepoSchema)),
 
     NASA_API_KEY: z.string().trim().min(1)
 });
 
-try {
-    const envVariables = envDataSchema.parse(process.env);
-} catch (err) {
-    if(err instanceof z.ZodError) {
-        err.issues;
-    }
-}
 
-export type envVariables = z.infer<typeof envDataSchema>;
+export const config = envDataSchema.parse(process.env);
+
+export type Config = typeof config;
