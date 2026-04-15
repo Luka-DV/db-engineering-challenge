@@ -35,7 +35,7 @@ const ghRepoSchema = z.string()
 
 const envDataSchema = z.object({
     DBOX_API_KEY: z.string().trim().min(1),
-    DBOX_GITHUB_DATASET_ID: z.uuid(),
+    DBOX_GITHUB_DATASET_ID: z.uuid(), // alternative: z.guid()
     DBOX_NASA_DATASET_ID: z.uuid(),
 
     GH_ACCESS_TOKEN: z.string().trim().min(1),
@@ -49,7 +49,15 @@ const envDataSchema = z.object({
         })
         .pipe(z.array(ghRepoSchema)),
 
-    NASA_API_KEY: z.string().trim().min(1)
+    NASA_API_KEY: z.string().trim().min(1),
+
+    DRY_RUN: z.string()
+            .trim()
+            .toLowerCase()
+            .transform(string => {
+            if(string === "false") return false;
+            else return true;
+        }).default(true)
 });
 
 
