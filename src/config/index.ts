@@ -52,9 +52,9 @@ const envDataSchema = z.object({
     NASA_API_KEY: z.string().trim().min(1),
 
     DRY_RUN: z.string()
-            .trim()
-            .toLowerCase()
-            .transform(string => {
+        .trim()
+        .toLowerCase()
+        .transform(string => {
             if(string === "false") return false;
             else return true;
         }).default(true)
